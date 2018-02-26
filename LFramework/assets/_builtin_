@@ -1,0 +1,47 @@
+print = function(...)
+	local args={...};local array={};
+	for k,v in pairs(args) do
+		table.insert(array,tostring(v));
+	end
+	sys.log(table.concat(array," "));
+end
+sys.version=LFrameworkVersion;
+sys.platform=LPlatform;
+sys.gc=function() collectgarbage('collect') end
+print(string.format('LFramework %s on %s > start...',sys.version or '*',sys.platform or '*'));
+sys.callbacks={id=0;}
+sys.callback=function(f)
+	sys.callbacks.id = sys.callbacks.id + 1;
+	sys.callbacks[sys.callbacks.id]=function(e,o) f(e,o ~= 0 and sys.bindRef(o) or o) end;
+	local rid = sys.callbacks.id;
+	local result = sys.new('com.ry.lframework.LCallBack',rid);
+	result.proxy = newproxy(true)
+	getmetatable(result.proxy).__gc = function() sys.callbacks[rid]=nil; end;
+	return result;
+end
+local _syscall=sys.call;sys.call=function(...) local r=_syscall(...);if r then return sys.bindRef(r); end end
+sys.float=function(v) return sys.new('java.lang.Float',v) end
+sys.int=function(v) return sys.new('java.lang.Integer',v) end
+sys.long=function(v) return sys.new('java.lang.Long',v) end
+sys.double=function(v) return sys.new('java.lang.Double',v) end
+sys.byte=function(v) return sys.new('java.lang.Byte',v) end
+sys.char=function(v) return sys.new('java.lang.Character',v) end
+sys.new=function(clazz,...) return sys.call(clazz,'new',nil,...); end
+sys.width = tonumber(sys.toString(sys.ns.displayWidth));
+sys.height = tonumber(sys.toString(sys.ns.displayHeight));
+sys.writePath = sys.toString(sys.ns.writePath);
+package.path = sys.writePath .. "/?.lua;" .. package.path;
+print("Path ",package.path);
+local _require = require;
+sys.inc = function(file)
+	local p = string.gsub(file,"/",".");
+	p = string.gsub(p,"%.lua","");
+	if package.loaded[p] then return _require(p); end
+	local data = sys.openAssets(file or "");
+	if data then
+		sys.importData(data,#data,p);
+	end
+	return _require(p);
+end
+require = sys.inc;
+print(string.format('Screen Size (%s x %s) write path: %s ...',sys.width,sys.height,sys.writePath));

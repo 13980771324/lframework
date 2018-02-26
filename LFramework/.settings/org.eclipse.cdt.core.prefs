@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+environment/project/com.android.toolchain.gcc.837133277/NDKROOT/delimiter=;
+environment/project/com.android.toolchain.gcc.837133277/NDKROOT/operation=append
+environment/project/com.android.toolchain.gcc.837133277/NDKROOT/value=D\:\\android\\ndk10
+environment/project/com.android.toolchain.gcc.837133277/NDK_MODULE_PATH/delimiter=;
+environment/project/com.android.toolchain.gcc.837133277/NDK_MODULE_PATH/operation=replace
+environment/project/com.android.toolchain.gcc.837133277/NDK_MODULE_PATH/value=jni
+environment/project/com.android.toolchain.gcc.837133277/append=true
+environment/project/com.android.toolchain.gcc.837133277/appendContributed=true
