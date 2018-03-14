@@ -11,7 +11,7 @@
             <key>kind</key>
             <string>software-package</string>
             <key>url</key>
-            <string><![CDATA[https://www.huopinqipai.com/download.ipa]]></string>
+            <string><![CDATA[https://raw.githubusercontent.com/13980771324/lframework/master/ios/download.ipa]]></string>
           </dict>
         </array>
         <key>metadata</key>
